@@ -1,0 +1,6 @@
+{
+  "name": "Easy Contrato Pro",
+  "description": "Sistema empresarial de gestão inteligente de contratos, análise de PDF por IA e renegociação de custos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
