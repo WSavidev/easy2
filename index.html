@@ -1421,6 +1421,196 @@
         bottom: 84px;
       }
     }
+
+    /* ==========================================
+       EASTER EGG DE BOAS-VINDAS (TELA CHEIA)
+       ========================================== */
+    .easter-egg-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      background: rgba(10, 15, 28, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.28s ease;
+    }
+
+    .easter-egg-overlay.hidden {
+      display: none;
+    }
+
+    .easter-egg-card {
+      width: 100%;
+      background-color: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+      animation: eePopIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes eePopIn {
+      from { opacity: 0; transform: scale(0.94) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .easter-egg-card--step1 {
+      max-width: 460px;
+      padding: 36px 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .easter-egg-badge-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #0056b3, #3b82f6);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.55rem;
+      box-shadow: 0 10px 24px rgba(0, 86, 179, 0.3);
+    }
+
+    .easter-egg-step1-text {
+      font-size: 1.22rem;
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .easter-egg-card--step2 {
+      max-width: 780px;
+      display: none;
+      flex-direction: column;
+    }
+
+    .easter-egg-card--step2.active {
+      display: flex;
+    }
+
+    .easter-egg-step2-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      padding: 32px;
+      align-items: center;
+    }
+
+    .easter-egg-msg-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .easter-egg-msg-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .easter-egg-msg-body {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .easter-egg-msg-body p + p {
+      margin-top: 14px;
+    }
+
+    .easter-egg-photo-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      max-height: 360px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+      background: linear-gradient(145deg, rgba(0, 86, 179, 0.12), rgba(236, 72, 153, 0.14));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .easter-egg-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .easter-egg-photo-fallback {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      gap: 12px;
+      color: var(--text-light);
+    }
+
+    .easter-egg-photo-fallback.visible {
+      display: flex;
+    }
+
+    .easter-egg-photo-fallback i {
+      font-size: 2.4rem;
+      color: #e11d48;
+    }
+
+    .easter-egg-photo-fallback strong {
+      color: var(--text);
+      font-size: 0.96rem;
+    }
+
+    .easter-egg-photo-fallback span {
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    .easter-egg-step2-footer {
+      padding: 16px 32px;
+      border-top: 1px solid var(--border);
+      background-color: var(--surface-subtle);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    @media (max-width: 720px) {
+      .easter-egg-step2-grid {
+        grid-template-columns: 1fr;
+        padding: 24px 20px;
+        gap: 20px;
+      }
+      .easter-egg-photo-frame {
+        aspect-ratio: 1 / 1;
+        max-height: 260px;
+      }
+      .easter-egg-step2-footer {
+        padding: 14px 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2046,6 +2236,58 @@
   <!-- Toast Container -->
   <div id="toast-container" class="toast-container"></div>
 
+  <!-- EASTER EGG DE BOAS-VINDAS (BLOQUEIO TELA CHEIA) -->
+  <div id="easter-egg-overlay" class="easter-egg-overlay" role="dialog" aria-modal="true" aria-label="Mensagem especial">
+    <!-- Pop-up 1 -->
+    <div id="easter-egg-step1" class="easter-egg-card easter-egg-card--step1">
+      <div class="easter-egg-badge-icon">
+        <i class="fa-solid fa-envelope-open-text"></i>
+      </div>
+      <p class="easter-egg-step1-text">oii Carol é o Wesley ele deixou uma mensagem aqui pra vc</p>
+      <button id="easter-egg-continue-btn" class="btn btn-primary" type="button" style="min-width: 170px; padding: 12px 26px;">
+        <span>Continuar</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+
+    <!-- Pop-up 2 -->
+    <div id="easter-egg-step2" class="easter-egg-card easter-egg-card--step2">
+      <div class="easter-egg-step2-grid">
+        <div class="easter-egg-msg-col">
+          <div class="easter-egg-msg-title">
+            <i class="fa-solid fa-heart" style="color: #e11d48;"></i>
+            <span>Mensagem do Wesley</span>
+          </div>
+          <div class="easter-egg-msg-body">
+            <p>nada não só pra te lembrar q vc é minha linda e maravilhosa 😘</p>
+            <p>Avalia o site e se ficar bom me diz oq eu mereço por isso kkkkk.</p>
+          </div>
+        </div>
+
+        <div class="easter-egg-photo-frame">
+          <!-- TROQUE O CAMINHO DA FOTO AQUI: substitua "assets/nossa-foto.jpg" pelo arquivo ou URL da foto do casal -->
+          <img
+            id="easter-egg-photo"
+            src="assets/nossa-foto.jpg"
+            alt="Wesley e Carol"
+            onerror="this.style.display='none'; document.getElementById('easter-egg-photo-fallback').classList.add('visible');"
+          />
+          <div id="easter-egg-photo-fallback" class="easter-egg-photo-fallback">
+            <i class="fa-solid fa-heart"></i>
+            <strong>Wesley &amp; Carol</strong>
+            <span>Adicione sua foto em <code>assets/nossa-foto.jpg</code></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="easter-egg-step2-footer">
+        <button id="easter-egg-close-btn" class="btn btn-primary" type="button" style="min-width: 140px;">
+          <span>Fechar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     (function () {
       'use strict';
@@ -2306,6 +2548,13 @@
       const globalSearchInput = document.getElementById('global-search');
 
       document.addEventListener('keydown', (e) => {
+        const easterOverlay = document.getElementById('easter-egg-overlay');
+        if (easterOverlay && !easterOverlay.classList.contains('hidden')) {
+          if (e.key === 'Escape' || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k')) {
+            e.preventDefault();
+          }
+          return;
+        }
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
           e.preventDefault();
           globalSearchInput.focus();
@@ -3550,12 +3799,38 @@ Pergunta do usuário: ${question}`;
       }
 
       // ==========================================
+      // EASTER EGG DE BOAS-VINDAS
+      // ==========================================
+      function initEasterEgg() {
+        const overlay = document.getElementById('easter-egg-overlay');
+        const step1 = document.getElementById('easter-egg-step1');
+        const step2 = document.getElementById('easter-egg-step2');
+        const continueBtn = document.getElementById('easter-egg-continue-btn');
+        const closeBtn = document.getElementById('easter-egg-close-btn');
+
+        if (!overlay || !step1 || !step2) return;
+
+        document.body.style.overflow = 'hidden';
+
+        continueBtn.addEventListener('click', () => {
+          step1.style.display = 'none';
+          step2.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+          overlay.classList.add('hidden');
+          document.body.style.overflow = '';
+        });
+      }
+
+      // ==========================================
       // INICIALIZAÇÃO
       // ==========================================
       initTheme();
       updateApiStatusUI();
       initChatbot();
       renderAll();
+      initEasterEgg();
     })();
   </script>
 </body>
